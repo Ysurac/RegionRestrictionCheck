@@ -77,7 +77,7 @@ countRunTimes() {
     TodayRunTimes=$(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $5}')
     TotalRunTimes=$(($(cat "${count_file}" | tail -3 | head -n 1 | awk '{print $7}') + 2527395))
 }
-countRunTimes
+#countRunTimes
 
 checkOS() {
     ifTermux=$(echo $PWD | grep termux)
@@ -3271,7 +3271,7 @@ function echo_Result() {
     for((i=0;i<${#array[@]};i++)) 
     do
         echo "$result" | grep "${array[i]}"
-        sleep 0.03
+        sleep 1
     done;
 }
 
@@ -3279,7 +3279,7 @@ function NA_UnlockTest() {
     echo "===========[ North America ]==========="
     local result=$(
     MediaUnlockTest_Fox ${1} &
-    MediaUnlockTest_HuluUS ${1} &
+    #MediaUnlockTest_HuluUS ${1} &
     MediaUnlockTest_NFLPlus ${1} &
     MediaUnlockTest_ESPNPlus ${1} &
     MediaUnlockTest_EPIX ${1} &
@@ -3794,6 +3794,7 @@ function CheckV6() {
 
 
 function Goodbye() {
+    exit 0
     if [ "${num}" == 1 ]; then
         ADN=TW
     elif [ "${num}" == 3 ]; then
@@ -3851,7 +3852,7 @@ function ScriptTitle() {
         echo ""
     fi
 }
-ScriptTitle
+#ScriptTitle
 
 function Start() {
     if [[ "$language" == "e" ]]; then
@@ -3890,7 +3891,7 @@ function RunScript() {
     if [[ -n "${num}" ]]; then
         if [[ "$num" -eq 1 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -3905,7 +3906,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 2 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -3920,7 +3921,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 3 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -3935,7 +3936,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 4 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -3950,7 +3951,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 5 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -3965,7 +3966,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 6 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -3980,7 +3981,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 7 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -3995,7 +3996,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 8 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -4010,7 +4011,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 9 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -4025,7 +4026,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 99 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Sport_UnlockTest 4
@@ -4038,7 +4039,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 0 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             CheckV4
             if [[ "$isv4" -eq 1 ]]; then
                 Global_UnlockTest 4
@@ -4051,7 +4052,7 @@ function RunScript() {
 
         elif [[ "$num" -eq 69 ]]; then
             clear
-            ScriptTitle
+            #ScriptTitle
             echo ""
             echo ""
             echo -e "${Font_Red}**************************${Font_Suffix}"
@@ -4068,7 +4069,7 @@ function RunScript() {
         fi
     else
         clear
-        ScriptTitle
+        #ScriptTitle
         CheckV4
         if [[ "$isv4" -eq 1 ]]; then
             Global_UnlockTest 4
