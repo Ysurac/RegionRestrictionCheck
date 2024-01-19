@@ -129,37 +129,6 @@ checkDependencies() {
 
     # os_detail=$(cat /etc/os-release 2> /dev/null)
 
-    if ! command -v python &>/dev/null; then
-        if command -v python3 &>/dev/null; then
-            alias python="python3"
-        else
-            if [ "$is_debian" == 1 ]; then
-                echo -e "${Font_Green}Installing python${Font_Suffix}"
-                $InstallMethod update >/dev/null 2>&1
-                $InstallMethod install python -y >/dev/null 2>&1
-            elif [ "$is_redhat" == 1 ]; then
-                echo -e "${Font_Green}Installing python${Font_Suffix}"
-                if [[ "$os_version" -gt 7 ]]; then
-                    $InstallMethod makecache >/dev/null 2>&1
-                    $InstallMethod install python3 -y >/dev/null 2>&1
-                    alias python="python3"
-                else
-                    $InstallMethod makecache >/dev/null 2>&1
-                    $InstallMethod install python -y >/dev/null 2>&1
-                fi
-
-            elif [ "$is_termux" == 1 ]; then
-                echo -e "${Font_Green}Installing python${Font_Suffix}"
-                $InstallMethod update -y >/dev/null 2>&1
-                $InstallMethod install python -y >/dev/null 2>&1
-
-            elif [ "$is_macos" == 1 ]; then
-                echo -e "${Font_Green}Installing python${Font_Suffix}"
-                $InstallMethod install python
-            fi
-        fi
-    fi
-
     if ! command -v dig &>/dev/null; then
         if [ "$is_debian" == 1 ]; then
             echo -e "${Font_Green}Installing dnsutils${Font_Suffix}"
@@ -176,6 +145,25 @@ checkDependencies() {
         elif [ "$is_macos" == 1 ]; then
             echo -e "${Font_Green}Installing bind${Font_Suffix}"
             $InstallMethod install bind
+        fi
+    fi
+
+    if ! command -v jq &>/dev/null; then
+        if [ "$is_debian" == 1 ]; then
+            echo -e "${Font_Green}Installing jq${Font_Suffix}"
+            $InstallMethod update >/dev/null 2>&1
+            $InstallMethod install jq -y >/dev/null 2>&1
+        elif [ "$is_redhat" == 1 ]; then
+            echo -e "${Font_Green}Installing jq${Font_Suffix}"
+            $InstallMethod makecache >/dev/null 2>&1
+            $InstallMethod install jq -y >/dev/null 2>&1
+        elif [ "$is_termux" == 1 ]; then
+            echo -e "${Font_Green}Installing jq${Font_Suffix}"
+            $InstallMethod update -y >/dev/null 2>&1
+            $InstallMethod install jq -y >/dev/null 2>&1
+        elif [ "$is_macos" == 1 ]; then
+            echo -e "${Font_Green}Installing jq${Font_Suffix}"
+            $InstallMethod install jq
         fi
     fi
 
@@ -900,26 +888,6 @@ function MediaUnlockTest_Molotov() {
         return
     fi
 
-}
-
-function MediaUnlockTest_Salto() {
-    local tmpresult=$(curl $useNIC $usePROXY $xForward -${1} ${ssll} -sS --max-time 10 "https://geo.salto.fr/v1/geoInfo/" 2>&1)
-    if [[ "$tmpresult" == "curl"* ]]; then
-        echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return
-    fi
-
-    local CountryCode=$(echo $tmpresult | python -m json.tool 2>/dev/null | grep 'country_code' | cut -f4 -d'"')
-    local AllowedCode="FR,GP,MQ,GF,RE,YT,PM,BL,MF,WF,PF,NC"
-    echo ${AllowedCode} | grep ${CountryCode} >/dev/null 2>&1
-
-    if [ $? -eq 0 ]; then
-        echo -n -e "\r Salto:\t\t\t\t\t${Font_Green}Yes${Font_Suffix}\n"
-        return
-    else
-        echo -n -e "\r Salto:\t\t\t\t\t${Font_Red}No${Font_Suffix}\n"
-        return
-    fi
 }
 
 function MediaUnlockTest_LineTV.TW() {
@@ -3379,7 +3347,6 @@ function EU_UnlockTest() {
     echo_Result ${result} ${array}
     ShowRegion FR
     local result=$(
-    MediaUnlockTest_Salto ${1} &
     MediaUnlockTest_CanalPlus ${1} &
     MediaUnlockTest_Molotov ${1} &
     MediaUnlockTest_Joyn ${1} &
@@ -3387,7 +3354,7 @@ function EU_UnlockTest() {
     MediaUnlockTest_ZDF ${1} &
     )
     wait
-    local array=("Salto:" "Canal+:" "Molotov:")
+    local array=("Canal+:" "Molotov:")
     echo_Result ${result} ${array}
     ShowRegion DE
     local array=("Joyn:" "Sky:" "ZDF:") 
